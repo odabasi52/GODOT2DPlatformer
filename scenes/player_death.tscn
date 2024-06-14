@@ -1,0 +1,151 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmtos30sd0ek1"]
+
+[ext_resource type="Texture2D" uid="uid://bm7hautwd86fw" path="res://assets/player/character_0004.png" id="1_hsj4r"]
+[ext_resource type="Script" path="res://scripts/player_death.gd" id="1_mrsuo"]
+[ext_resource type="Texture2D" uid="uid://cmcuwx5b4qvqo" path="res://assets/effects/particles.png" id="3_4vljx"]
+
+[sub_resource type="Animation" id="Animation_v0mde"]
+resource_name = "death"
+length = 1.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(2.07053, 1),
+"update": 0,
+"values": [0.0, 1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -12), Vector2(0, -8)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/Sprite2D:scale")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.35, 0.45),
+"transitions": PackedFloat32Array(1, 1, 0.129408, 0.129408),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1), Vector2(1, 1), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visuals/CPUParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_redraw"
+}]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"playerDeath"],
+"method": &"remove_from_group"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nhic8"]
+_data = {
+"death": SubResource("Animation_v0mde")
+}
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6vni8"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_x2b3j"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.237918, 1), 0.0, 0.0, 0, 0, Vector2(0.520446, 0.936364), 0.0, 0.0, 0, 0, Vector2(1, 0.0090909), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_vewid"]
+offsets = PackedFloat32Array(0, 0.508403, 0.621849, 0.894958, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0.775063, 0.775063, 0.775063, 1, 0.791999, 0.791999, 0.791999, 0.733333, 0.576471, 0.576471, 0.576471, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_go5gw"]
+size = Vector2(12, 17)
+
+[node name="playerDeath" type="CharacterBody2D" groups=["playerDeath"]]
+collision_layer = 0
+script = ExtResource("1_mrsuo")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "death"
+libraries = {
+"": SubResource("AnimationLibrary_nhic8")
+}
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = ExtResource("1_hsj4r")
+offset = Vector2(0, -12)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Visuals"]
+material = SubResource("CanvasItemMaterial_6vni8")
+position = Vector2(12, -9)
+emitting = false
+amount = 15
+one_shot = true
+explosiveness = 0.95
+lifetime_randomness = 0.5
+texture = ExtResource("3_4vljx")
+emission_shape = 1
+emission_sphere_radius = 7.0
+direction = Vector2(0, -1)
+spread = 80.0
+gravity = Vector2(0, -5)
+initial_velocity_min = 10.0
+initial_velocity_max = 50.0
+angular_velocity_min = 100.0
+angular_velocity_max = 300.0
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_x2b3j")
+color_ramp = SubResource("Gradient_vewid")
+anim_offset_max = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_go5gw")

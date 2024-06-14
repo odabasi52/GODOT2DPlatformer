@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxm65aqvs0pvl"]
+
+[ext_resource type="Texture2D" uid="uid://c7hrbyk6hcu7h" path="res://assets/enemy/character_0015.png" id="1_wgtaj"]
+
+[sub_resource type="Curve" id="Curve_p52oi"]
+max_value = 1.2
+_data = [Vector2(0, 1.06909), 0.0, 0.0, 0, 0, Vector2(0.144981, 1.2), 0.0, 0.0, 0, 0, Vector2(0.713755, 1.08), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Animation" id="Animation_e336p"]
+resource_name = "enemy_death"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CPUParticles2D:emitting")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CPUParticles2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.75),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rgt2g"]
+_data = {
+"enemy_death": SubResource("Animation_e336p")
+}
+
+[node name="EnemyDeath" type="Node2D"]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, -12)
+emitting = false
+amount = 1
+lifetime = 0.75
+one_shot = true
+texture = ExtResource("1_wgtaj")
+direction = Vector2(0, -1)
+spread = 30.0
+gravity = Vector2(0, 1000)
+initial_velocity_min = 180.0
+initial_velocity_max = 200.0
+angular_velocity_min = -300.0
+angular_velocity_max = 300.0
+scale_amount_curve = SubResource("Curve_p52oi")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "enemy_death"
+libraries = {
+"": SubResource("AnimationLibrary_rgt2g")
+}

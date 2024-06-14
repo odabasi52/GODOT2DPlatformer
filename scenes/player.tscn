@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://di0h5cr8yqw65"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_auknh"]
+[ext_resource type="Texture2D" uid="uid://bm7hautwd86fw" path="res://assets/player/character_0004.png" id="2_wtifx"]
+[ext_resource type="Texture2D" uid="uid://3068xxywu0iq" path="res://assets/player/character_0005.png" id="3_jmpjo"]
+[ext_resource type="Shader" path="res://resource/player.gdshader" id="4_058d5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e87xa"]
+shader = ExtResource("4_058d5")
+shader_parameter/baseColor = Color(1, 0.603922, 0.729412, 1)
+
+[sub_resource type="Curve" id="Curve_2ufky"]
+_data = [Vector2(0.029703, 1), 0.0, 0.0, 0, 0, Vector2(0.168317, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0454545), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rjyh"]
+size = Vector2(14, 8)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_67ggq"]
+radius = 13.4164
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lcrg1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wtifx")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jmpjo")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_wtifx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jmpjo")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qnoky"]
+size = Vector2(12, 17)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vxcf0"]
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 0
+script = ExtResource("1_auknh")
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="DashParticle" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_e87xa")
+position = Vector2(0, -12)
+emitting = false
+amount = 15
+lifetime = 0.15
+texture = ExtResource("2_wtifx")
+gravity = Vector2(0, 0)
+scale_amount_curve = SubResource("Curve_2ufky")
+
+[node name="DyingArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 1342177280
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DyingArea"]
+position = Vector2(0, -12)
+scale = Vector2(1, 2.8)
+shape = SubResource("RectangleShape2D_8rjyh")
+
+[node name="CoinArea2D" type="Area2D" parent="."]
+collision_layer = 2147483648
+collision_mask = 2147483648
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CoinArea2D"]
+position = Vector2(0, -12)
+shape = SubResource("CircleShape2D_67ggq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_lcrg1")
+animation = &"jump"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_qnoky")
+
+[node name="DashArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashArea"]
+position = Vector2(0, -13)
+scale = Vector2(1.31874, 0.839107)
+shape = SubResource("CapsuleShape2D_vxcf0")
+
+[node name="WinChecker" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WinChecker"]
+position = Vector2(0, -13)
+scale = Vector2(1.31874, 0.839107)
+shape = SubResource("CapsuleShape2D_vxcf0")

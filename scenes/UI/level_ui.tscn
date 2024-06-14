@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://dclclnyjp08q3"]
+
+[ext_resource type="Theme" uid="uid://cwcw4wt01d6y0" path="res://resource/theme.tres" id="1_kbrdg"]
+[ext_resource type="Script" path="res://scripts/level_ui.gd" id="1_lnu8q"]
+[ext_resource type="FontFile" uid="uid://bmd8yjbtk4la3" path="res://resource/BitPotion.ttf" id="3_80ur5"]
+[ext_resource type="Texture2D" uid="uid://c6uy5hfy6prsq" path="res://assets/coin/tile_0151.png" id="3_v0267"]
+[ext_resource type="Texture2D" uid="uid://db8x4528x0bxv" path="res://assets/coin/tile_0152.png" id="4_uummq"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_8nt64"]
+frames = 2
+speed_scale = 8.0
+frame_0/texture = ExtResource("3_v0267")
+frame_1/texture = ExtResource("4_uummq")
+frame_1/duration = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_hkpt7"]
+font = ExtResource("3_80ur5")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0.819608, 0.498039, 0.870588, 0)
+
+[node name="LevelUI" type="CanvasLayer"]
+script = ExtResource("1_lnu8q")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_kbrdg")
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = SubResource("AnimatedTexture_8nt64")
+expand_mode = 1
+
+[node name="CoinLabel" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_80ur5")
+text = "10/30"
+label_settings = SubResource("LabelSettings_hkpt7")

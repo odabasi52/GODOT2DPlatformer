@@ -1,0 +1,56 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://cwcw4wt01d6y0"]
+
+[ext_resource type="Texture2D" uid="uid://cmtir425srd8u" path="res://assets/tiles/tile_0029.png" id="1_5rll8"]
+[ext_resource type="FontVariation" uid="uid://ki51umstd5gq" path="res://resource/font.tres" id="1_oa2vh"]
+[ext_resource type="Texture2D" uid="uid://u6llbavde11r" path="res://assets/tiles/tile_0009.png" id="1_xxm53"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_viado"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x6el6"]
+texture = ExtResource("1_xxm53")
+texture_margin_left = 5.0
+texture_margin_top = 7.0
+texture_margin_right = 7.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pcnau"]
+texture = ExtResource("1_5rll8")
+texture_margin_left = 5.0
+texture_margin_top = 7.0
+texture_margin_right = 7.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.992157, 0.796078, 0.752941, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xq07w"]
+texture = ExtResource("1_xxm53")
+texture_margin_left = 5.0
+texture_margin_top = 7.0
+texture_margin_right = 7.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.811765, 0.811765, 0.811765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0amk"]
+bg_color = Color(0, 0, 0, 0.533333)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 1
+shadow_color = Color(0, 0, 0, 0.298039)
+anti_aliasing = false
+anti_aliasing_size = 1.677
+
+[resource]
+default_font = ExtResource("1_oa2vh")
+Button/colors/font_color = Color(0.358843, 0.154279, 0.157775, 1)
+Button/colors/font_pressed_color = Color(0.847059, 0.847059, 0.847059, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_viado")
+Button/styles/hover = SubResource("StyleBoxTexture_x6el6")
+Button/styles/normal = SubResource("StyleBoxTexture_pcnau")
+Button/styles/pressed = SubResource("StyleBoxTexture_xq07w")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_e0amk")
